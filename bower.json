@@ -1,0 +1,29 @@
+{
+  "name": "mudhead",
+  "interactive": true,
+  "color": true,
+  "license": "ISC",
+  "keywords": [
+    "rykkn0wxx"
+  ],
+  "homepage": "https://github.com/rykn0wxx/admin-dashboard",
+  "private": true,
+  "appPath": "app",
+  "moduleName": "mudhead",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "angular-animate": "^1.4.0",
+    "angular-aria": "^1.4.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  }
+}
