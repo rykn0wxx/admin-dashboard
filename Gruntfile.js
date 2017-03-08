@@ -15,14 +15,16 @@ module.exports = function (grunt) {
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    ngtemplates: 'grunt-angular-templates'
   });
 
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    host: 'localhost',
+    port: require('./bower.json').appPort || 1983,
+    repo: require('./bower.json').repository
   };
 
   // Define the configuration for all the tasks
@@ -31,11 +33,46 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    // Browser custom configuration
+    browserSync: {
+			bsFiles: {
+				src: [
+					'<%= yeoman.app %>/*.html',
+					'<%= yeoman.app %>/styles/*.css',
+					'less/*.less'
+				]
+			},
+			options: {
+				watchTask: true,
+				proxy: '<%= yeoman.host %>:<%= yeoman.port %>',
+        port: 1984,
+        ghostMode: {
+          clicks: false,
+          scroll: false,
+          forms: {
+            submit: false,
+            inputs: false,
+            toggles: false
+          }
+        }
+			}
+		},
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['wiredep']
+        tasks: ['wiredep'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      less: {
+        files: ['less/**/*.less'],
+        tasks: ['less', 'newer:copy:styles', 'postcss'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
@@ -44,16 +81,15 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
-      },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'postcss']
       },
       gruntfile: {
-        files: ['Gruntfile.js']
+        files: ['Gruntfile.js'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
       livereload: {
         options: {
@@ -67,23 +103,44 @@ module.exports = function (grunt) {
       }
     },
 
+    // Less files settings
+    less: {
+      dev: {
+        options: {
+          paths: ['less'],
+          compress: false
+        },
+        files: {
+          '<%= yeoman.app %>/styles/kohana.css' : 'less/kohana.less'
+        }
+      }
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: '<%= yeoman.port %>',
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '<%= yeoman.host %>',
         livereload: 35729
       },
       livereload: {
         options: {
-          open: true,
+          open: false,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
+              ),
+              connect().use(
+                '/less',
+                connect.static('./less')
+              ),
+              connect().use(
+                '/app/styles',
+                connect.static('./app/fonts')
               ),
               connect().use(
                 '/app/styles',
@@ -220,7 +277,7 @@ module.exports = function (grunt) {
             }
           }
       }
-    }, 
+    },
 
     // Renames files for browser caching purposes
     filerev: {
@@ -387,13 +444,25 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          cwd: 'bower_components/font-awesome',
+          src: 'fonts/*',
+          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        files :[{
+          expand: true,
+          cwd: '<%= yeoman.app %>/styles',
+          dest: '.tmp/styles/',
+          src: '{,*/}*.css'
+        }, {
+          expand: true,
+          cwd: 'bower_components/font-awesome',
+          src: 'fonts/*',
+          dest: '<%= yeoman.app %>'
+        }]
       }
     },
 
@@ -418,7 +487,34 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
-    }
+    },
+
+    // File loader
+    angularFileLoader: {
+      options: {
+        scripts: ['app/scripts/**/*.js']
+      },
+      customOptions: {
+        src: 'app/reg.html'
+      }
+    },
+
+    // Build gh-pages
+    buildcontrol: {
+			options: {
+				dir: 'dist',
+				commit: true,
+				push: true,
+				message: 'Built by rykn0wxx'
+			},
+			pages: {
+				options: {
+					remote: '<%= yeoman.repo.repository.url %>',
+					branch: 'gh-pages'
+				}
+			}
+		}
+
   });
 
 
@@ -430,9 +526,12 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'less',
+      'angularFileLoader',
       'concurrent:server',
       'postcss:server',
       'connect:livereload',
+      'browserSync',
       'watch'
     ]);
   });
@@ -461,7 +560,6 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
@@ -474,5 +572,10 @@ module.exports = function (grunt) {
     'newer:jscs',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build',
+    'buildcontrol'
   ]);
 };

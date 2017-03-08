@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the Mudhead
  */
-angular.module('Mudhead')
+angular.module('mudhead')
   .controller('MainCtrl', ['$scope', function ($scope) {
     this.awesomeThings = [
       'HTML5 Boilerplate',

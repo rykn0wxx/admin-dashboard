@@ -1,17 +1,28 @@
 <!doctype html>
-<html>
+<html ng-app="mudhead" ng-cloak="true">
   <head>
-    <meta charset="utf-8" ng-app="mudhead" ng-cloak="true">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="description" content="rykn0wxx v3" />
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+    <title ng-bind="'KPI - ' + activePageTitle" >
+      KPI
+    </title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/dcjs/dc.css" />
+    <link rel="stylesheet" href="bower_components/hover/css/hover.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/kohana.css">
     <!-- endbuild -->
   </head>
   <body class="rykn0wxx">
@@ -52,6 +63,25 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/crossfilter2/crossfilter.min.js"></script>
+    <script src="bower_components/dcjs/dc.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment-picker/dist/angular-moment-picker.js"></script>
+    <script src="bower_components/highcharts/highstock.src.js"></script>
+    <script src="bower_components/highcharts/modules/exporting.src.js"></script>
+    <script src="bower_components/highcharts/modules/data.src.js"></script>
+    <script src="bower_components/highcharts/modules/drilldown.src.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="bower_components/accounting/accounting.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

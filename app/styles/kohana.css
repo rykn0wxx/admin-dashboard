@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/*!
+ * rykn0wxx Automation Dashboard v3
+ */
+*,
+*:before,
+*::before,
+*::after,
+*:after {
+  box-sizing: inherit;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  position: relative;
+  overflow-x: hidden;
+  font-size: 62.5%;
+  line-height: 1.4;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+html,
+body {
+  min-height: 100%;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-shadow: none !important;
+}
+body.rykn0wxx {
+  font-size: 1.6rem;
+}
+body.rykn0wxx .wrapper {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+body.rykn0wxx h1,
+body.rykn0wxx h2,
+body.rykn0wxx h3,
+body.rykn0wxx h4,
+body.rykn0wxx .h1,
+body.rykn0wxx .h2,
+body.rykn0wxx .h3,
+body.rykn0wxx .h4 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+body.rykn0wxx p {
+  margin: 0 0 10px;
+}

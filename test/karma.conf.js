@@ -20,6 +20,26 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
+      'bower_components/jquery/dist/jquery.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-animate/angular-animate.js',
+      'bower_components/angular-aria/angular-aria.js',
+      'bower_components/angular-messages/angular-messages.js',
+      'bower_components/angular-material/angular-material.js',
+      'bower_components/d3/d3.js',
+      'bower_components/crossfilter2/crossfilter.min.js',
+      'bower_components/dcjs/dc.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/restangular/dist/restangular.js',
+      'bower_components/moment/moment.js',
+      'bower_components/angular-moment-picker/dist/angular-moment-picker.js',
+      'bower_components/highcharts/highstock.src.js',
+      'bower_components/highcharts/modules/exporting.src.js',
+      'bower_components/highcharts/modules/data.src.js',
+      'bower_components/highcharts/modules/drilldown.src.js',
+      'bower_components/highcharts-ng/dist/highcharts-ng.js',
+      'bower_components/accounting/accounting.js',
+      'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

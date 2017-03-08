@@ -10,7 +10,7 @@
  * Main module of the application.
  */
 angular
-  .module('Mudhead', [
+  .module('mudhead', [
     'ngAnimate',
     'ngAria'
   ]);
